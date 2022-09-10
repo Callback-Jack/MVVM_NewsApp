@@ -25,8 +25,15 @@ Swipe left or right to delete the article.
    design the layout for the item article of the list, and the layout for ArticleFragment with `WebView`.
     
 2. Setup navigation components:
-   - Add dependencies for "navigation-fragment-ktx", "navigation-ui-ktx"
-   - Setup the Host Fragment and all the fragment classes
-   - Design the navigation graph actions and add slide-in-and-out animations
-   - Setup the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`
+   - Add dependencies for "androidx.navigation:navigation-fragment-ktx", "androidx.navigation:navigation-ui-ktx".
+   - Setup the Host Fragment and all the fragment classes.
+   - Design the navigation graph actions and add slide-in-and-out animations.
+   - Setup the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`.
 
+3. Retrofit setup
+   - Add dependencies for `Retrofit`: "com.squareup.retrofit2:retrofit", "com.squareup.retrofit2:converter-gson".
+   - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
+   - Add logging interceptor for debugging "com.squareup.okhttp3:logging-interceptor".
+   - Create the response classes from the `JSON` of newsapi.org.
+   - Create interface and functions for the NewsAPI according to the documentation of newsapi.org.
+   - Create RetrofitInstance class and add the logging interceptor and the converter factory to the instance.
