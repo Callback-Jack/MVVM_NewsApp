@@ -3,14 +3,14 @@
 ### Description:
 
 This app is implemented with MVVM, it uses `Retrofit` to retrieve and search for news at newsapi.org, and stores favorite news in the database using `Room`. The pagination of the `Recycler View` is 5 articles at a time. The navigation between fragments is built with `Navigation Components`, and a slide-in-and-out animation is added.
-<p align="center"> <img src="/ScreenShots/breakingNews.png" width="200" alt="Breaking News SceenShot" /> </p>
-Click on a item artilce to view it.
+<p align="center"> <img src="/ScreenShots/breakingNews.png" width="200" alt="Breaking News ScreenShot" /> </p>
+Click on a item article to view it.
 
-<p align="center"> <img src="/ScreenShots/searchNews.png" width="200" alt="Search News SceenShot" /> </p>
+<p align="center"> <img src="/ScreenShots/searchNews.png" width="200" alt="Search News ScreenShot" /> </p>
 Type in the search bar to search.
-<p align="center"> <img src="/ScreenShots/article.png" width="200" alt="Article SceenShot" /> </p>
+<p align="center"> <img src="/ScreenShots/article.png" width="200" alt="Article ScreenShot" /> </p>
 Click on the floating action button to save the article.
-<p align="center"> <img src="/ScreenShots/savedNews.png" width="200" alt="Saved News SceenShot" /> </p>
+<p align="center"> <img src="/ScreenShots/savedNews.png" width="200" alt="Saved News ScreenShot" /> </p>
 Swipe left or right to delete the article.
 
 ### How to view the project: 
