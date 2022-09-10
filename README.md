@@ -4,8 +4,7 @@
 
 This app is implemented with MVVM, it uses `Retrofit` to retrieve and search for news at newsapi.org, and stores favorite news in the database using `Room`. The pagination of the `Recycler View` is 5 articles at a time. The navigation between fragments is built with `Navigation Components`, and a slide-in-and-out animation is added.
 <p align="center"> <img src="/ScreenShots/breakingNews.png" width="200" alt="Breaking News ScreenShot" /> </p>
-Click on a item article to view it.
-
+Click on an item article to view it.
 <p align="center"> <img src="/ScreenShots/searchNews.png" width="200" alt="Search News ScreenShot" /> </p>
 Type in the search bar to search.
 <p align="center"> <img src="/ScreenShots/article.png" width="200" alt="Article ScreenShot" /> </p>
@@ -25,5 +24,9 @@ Swipe left or right to delete the article.
 1. Create XML layouts for NewsActivity, BreakingNewsFragment, SearchNewsFragment, SavedNewsFragment using `Recycler View`,
    design the layout for the item article of the list, and the layout for ArticleFragment with `WebView`.
     
-2. 
+2. Setup navigation components:
+   - Add dependencies for "navigation-fragment-ktx", "navigation-ui-ktx"
+   - Setup the Host Fragment and all the fragment classes
+   - Design the navigation graph actions and add slide-in-and-out animations
+   - Setup the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`
 
