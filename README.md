@@ -2,7 +2,7 @@
 
 ### Description:
 
-This app is implemented with MVVM, it uses `Retrofit` to retrieve and search for news at newsapi.org, and stores favorite news in the database using `Room`. The pagination of the `Recycler View` is 5 articles at a time. The navigation between fragments is built with `Navigation Components`, and a slide-in-and-out animation is added.
+This app is implemented with MVVM, it uses `Retrofit` to retrieve and search for news at newsapi.org, and stores favorite news in the database using `Room`. The pagination of the `Recycler View` is 5 articles at a time. The navigation between fragments is built with `Navigation Components`, and a slide-in-and-out animation is added. `Kodein` is used for the dependency injection.
 <p align="center"> <img src="/ScreenShots/breakingNews.png" width="200" alt="Breaking News ScreenShot" /> </p>
 Click on an item article to view it.
 <p align="center"> <img src="/ScreenShots/searchNews.png" width="200" alt="Search News ScreenShot" /> </p>
@@ -32,7 +32,6 @@ Swipe left or right to delete the article.
 
 3. Retrofit setup:
    - Add dependencies for `Retrofit`: "com.squareup.retrofit2:retrofit", "com.squareup.retrofit2:converter-gson".
-   - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
    - Add logging interceptor for debugging "com.squareup.okhttp3:logging-interceptor".
    - Create NewsResponse classes from the `JSON` of newsapi.org.
    - Create interface and functions for the NewsAPI according to the documentation of newsapi.org.
@@ -43,3 +42,24 @@ Swipe left or right to delete the article.
    - Annotate Article data class, and create ArticleDao interface.
    - Create ArticleDatabase class.
    - Create Converters class for the `TypeConverters` for Source data class, and add it to ArticleDatabase.
+
+5. Setup RecyclerView with DiffUtil:
+   - Add dependencies for `Glide`: "com.github.bumptech.glide:glide", kapt "com.github.bumptech.glide:compiler".
+   - Create NewsAdapter class with binding, AsyncListDiffer, Glide.
+   - Add onItemClickListener to the binding via a setter function.
+
+6. Setup the MVVM architectural skeleton:
+   - Add dependencies for `LifeCycle`: "androidx.lifecycle:lifecycle-viewmodel-ktx", "androidx.lifecycle:lifecycle-runtime-ktx".
+   - Create NewsRepository class with ArticleDatabase, NewsAPI.
+   - Create NewsViewModel, NewsViewModelProviderFactory class.
+   - Instantiate repository, viewModelProviderFactory, ViewModel in NewsActivity
+   - Setup binding and viewModel in all the fragment classes
+   - Create a wrapper generic Resource class to wrap around the responses.
+
+7. Handling breaking news response:
+   - Add `user-permissions` for the Internet in manifest
+   - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
+   - Create getBreakingNews function in NewsRepository
+   - Create a function to launch `getBreakingNews()`, and a function to handle the response.
+   - setup RecyclerView with `breakingNews` LiveData in BreakingNewsFragment
+   - Handle the different return types of Resource<NewsResponse> 
