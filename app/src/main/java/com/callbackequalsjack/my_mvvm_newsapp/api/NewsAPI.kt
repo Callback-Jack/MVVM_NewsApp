@@ -1,6 +1,6 @@
 package com.callbackequalsjack.my_mvvm_newsapp.api
 
-import com.callbackequalsjack.my_mvvm_newsapp.NewsResponse
+import com.callbackequalsjack.my_mvvm_newsapp.models.NewsResponse
 import com.callbackequalsjack.my_mvvm_newsapp.util.Constants.Companion.API_KEY
 import com.callbackequalsjack.my_mvvm_newsapp.util.Constants.Companion.COUNTRY_CODE
 import com.callbackequalsjack.my_mvvm_newsapp.util.Constants.Companion.PAGE_SIZE

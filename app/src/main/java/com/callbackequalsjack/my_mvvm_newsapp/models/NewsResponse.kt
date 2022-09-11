@@ -1,4 +1,4 @@
-package com.callbackequalsjack.my_mvvm_newsapp
+package com.callbackequalsjack.my_mvvm_newsapp.models
 
 data class NewsResponse(
     val articles: List<Article>,

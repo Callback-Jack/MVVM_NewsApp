@@ -30,10 +30,16 @@ Swipe left or right to delete the article.
    - Design the navigation graph actions and add slide-in-and-out animations.
    - Setup the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`.
 
-3. Retrofit setup
+3. Retrofit setup:
    - Add dependencies for `Retrofit`: "com.squareup.retrofit2:retrofit", "com.squareup.retrofit2:converter-gson".
    - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
    - Add logging interceptor for debugging "com.squareup.okhttp3:logging-interceptor".
-   - Create the response classes from the `JSON` of newsapi.org.
+   - Create NewsResponse classes from the `JSON` of newsapi.org.
    - Create interface and functions for the NewsAPI according to the documentation of newsapi.org.
    - Create RetrofitInstance class and add the logging interceptor and the converter factory to the instance.
+
+4. Room setup:
+   - Add dependencies for `Room`: "androidx.room:room-runtime", "androidx.room:room-ktx", kapt "androidx.room:room-compiler".
+   - Annotate Article data class, and create ArticleDao interface.
+   - Create ArticleDatabase class.
+   - Create Converters class for the `TypeConverters` for Source data class, and add it to ArticleDatabase.
