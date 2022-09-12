@@ -57,9 +57,19 @@ Swipe left or right to delete the article.
    - Create a wrapper generic Resource class to wrap around the responses.
 
 7. Handling breaking news response:
-   - Add `user-permissions` for the Internet in manifest
+   - Add `user-permissions` for the Internet in manifest.
    - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
-   - Create getBreakingNews function in NewsRepository
-   - Create a function to launch `getBreakingNews()`, and a function to handle the response.
-   - setup RecyclerView with `breakingNews` LiveData in BreakingNewsFragment
-   - Handle the different return types of Resource<NewsResponse> 
+   - Create getBreakingNews function in NewsRepository.
+   - Create a function to launch `getBreakingNews()`, and a function to handle the response in NewsViewModel.
+   - Setup RecyclerView with `breakingNews LiveData` in BreakingNewsFragment.
+   - Handle the different types of `Resource<NewsResponse>` .
+
+8. Handling search news response:
+   - Setup NewsRepository, NewsViewModel, and SearchNewsFragment, the same way as for the breaking news.
+   - Implement `addTextChangedListener` for the `EditText` with `Coroutine Job` to search for news with a time delay.
+
+9. Show articles in the WebView
+   - Add plugin: `id "androidx.navigation.safeargs.kotlin" version "2.5.1"`
+   - Make Article class serializable and add it to the argument of ArticleFragment in the navigation graph.
+   - In all fragments, implement `setOnItemClickListener` with the corresponding navigation action.
+   - get the article from ArticleFragmentArgs and pass it to the WebView

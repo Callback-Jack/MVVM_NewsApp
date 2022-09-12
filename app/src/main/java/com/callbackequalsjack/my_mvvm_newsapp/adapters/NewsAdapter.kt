@@ -1,13 +1,11 @@
 package com.callbackequalsjack.my_mvvm_newsapp.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.callbackequalsjack.my_mvvm_newsapp.R
 import com.callbackequalsjack.my_mvvm_newsapp.databinding.ItemArticlePreviewBinding
 import com.callbackequalsjack.my_mvvm_newsapp.models.Article
 
@@ -43,10 +41,11 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             tvTitle.text = article.title
             tvPublishedAt.text = article.publishedAt
             tvDescription.text = article.description
-            root.setOnClickListener {
-                onItemClickListener?.let { it(article) }
-            }
+//            root.setOnClickListener {
+//                onItemClickListener?.let { it(article) }
+//            }
         }
+        holder.binding.root.setOnClickListener { onItemClickListener?.let { it(article) } }
     }
 
     override fun getItemCount(): Int {

@@ -6,5 +6,6 @@ class Constants {
         const val COUNTRY_CODE = "ca"
         const val PAGE_SIZE = 5
         const val BASE_URL = "https://newsapi.org"
+        const val SEARCH_NEWS_TIME_DELAY = 500L
     }
 }
