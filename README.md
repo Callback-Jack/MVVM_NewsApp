@@ -25,51 +25,61 @@ Swipe left or right to delete the article.
    design the layout for the item article of the list, and the layout for ArticleFragment with `WebView`.
     
 2. Setup navigation components:
-   - Add dependencies for "androidx.navigation:navigation-fragment-ktx", "androidx.navigation:navigation-ui-ktx".
-   - Setup the Host Fragment and all the fragment classes.
-   - Design the navigation graph actions and add slide-in-and-out animations.
-   - Setup the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`.
+    - Add dependencies for "androidx.navigation:navigation-fragment-ktx", "androidx.navigation:navigation-ui-ktx".
+    - Setup the Host Fragment and all the fragment classes.
+    - Design the navigation graph actions and add slide-in-and-out animations.
+    - Setup the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`.
 
 3. Retrofit setup:
-   - Add dependencies for `Retrofit`: "com.squareup.retrofit2:retrofit", "com.squareup.retrofit2:converter-gson".
-   - Add logging interceptor for debugging "com.squareup.okhttp3:logging-interceptor".
-   - Create NewsResponse classes from the `JSON` of newsapi.org.
-   - Create interface and functions for the NewsAPI according to the documentation of newsapi.org.
-   - Create RetrofitInstance class and add the logging interceptor and the converter factory to the instance.
+    - Add dependencies for `Retrofit`: "com.squareup.retrofit2:retrofit", "com.squareup.retrofit2:converter-gson".
+    - Add logging interceptor for debugging "com.squareup.okhttp3:logging-interceptor".
+    - Create NewsResponse classes from the `JSON` of newsapi.org.
+    - Create interface and functions for the NewsAPI according to the documentation of newsapi.org.
+    - Create RetrofitInstance class and add the logging interceptor and the converter factory to the instance.
 
 4. Room setup:
-   - Add dependencies for `Room`: "androidx.room:room-runtime", "androidx.room:room-ktx", kapt "androidx.room:room-compiler".
-   - Annotate Article data class, and create ArticleDao interface.
-   - Create ArticleDatabase class.
-   - Create Converters class for the `TypeConverters` for Source data class, and add it to ArticleDatabase.
+    - Add dependencies for `Room`: "androidx.room:room-runtime", "androidx.room:room-ktx", kapt "androidx.room:room-compiler".
+    - Annotate Article data class, and create ArticleDao interface.
+    - Create ArticleDatabase class.
+    - Create Converters class for the `TypeConverters` for Source data class, and add it to ArticleDatabase.
 
 5. Setup RecyclerView with DiffUtil:
-   - Add dependencies for `Glide`: "com.github.bumptech.glide:glide", kapt "com.github.bumptech.glide:compiler".
-   - Create NewsAdapter class with binding, AsyncListDiffer, Glide.
-   - Add onItemClickListener to the binding via a setter function.
+    - Add dependencies for `Glide`: "com.github.bumptech.glide:glide", kapt "com.github.bumptech.glide:compiler".
+    - Create NewsAdapter class with binding, AsyncListDiffer, Glide.
+    - Add onItemClickListener to the binding via a setter function.
 
 6. Setup the MVVM architectural skeleton:
-   - Add dependencies for `LifeCycle`: "androidx.lifecycle:lifecycle-viewmodel-ktx", "androidx.lifecycle:lifecycle-runtime-ktx".
-   - Create NewsRepository class with ArticleDatabase, NewsAPI.
-   - Create NewsViewModel, NewsViewModelProviderFactory class.
-   - Instantiate repository, viewModelProviderFactory, ViewModel in NewsActivity
-   - Setup binding and viewModel in all the fragment classes
-   - Create a wrapper generic Resource class to wrap around the responses.
+    - Add dependencies for `LifeCycle`: "androidx.lifecycle:lifecycle-viewmodel-ktx", "androidx.lifecycle:lifecycle-runtime-ktx".
+    - Create NewsRepository class with ArticleDatabase, NewsAPI.
+    - Create NewsViewModel, NewsViewModelProviderFactory class.
+    - Instantiate repository, viewModelProviderFactory, ViewModel in NewsActivity
+    - Setup binding and viewModel in all the fragment classes
+    - Create a wrapper generic Resource class to wrap around the responses.
 
 7. Handling breaking news response:
-   - Add `user-permissions` for the Internet in manifest.
-   - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
-   - Create getBreakingNews function in NewsRepository.
-   - Create a function to launch `getBreakingNews()`, and a function to handle the response in NewsViewModel.
-   - Setup RecyclerView with `breakingNews LiveData` in BreakingNewsFragment.
-   - Handle the different types of `Resource<NewsResponse>` .
+    - Add `user-permissions` for the Internet in manifest.
+    - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
+    - Create getBreakingNews function in NewsRepository.
+    - Create a function to launch `getBreakingNews()`, and a function to handle the response in NewsViewModel.
+    - Setup RecyclerView with `breakingNews LiveData` in BreakingNewsFragment.
+    - Handle the different types of `Resource<NewsResponse>` .
 
 8. Handling search news response:
-   - Setup NewsRepository, NewsViewModel, and SearchNewsFragment, the same way as for the breaking news.
-   - Implement `addTextChangedListener` for the `EditText` with `Coroutine Job` to search for news with a time delay.
+    - Setup NewsRepository, NewsViewModel, and SearchNewsFragment, the same way as for the breaking news.
+    - Implement `addTextChangedListener` for the `EditText` with `Coroutine Job` to search for news with a time delay.
 
-9. Show articles in the WebView
-   - Add plugin: `id "androidx.navigation.safeargs.kotlin" version "2.5.1"`
-   - Make Article class serializable and add it to the argument of ArticleFragment in the navigation graph.
-   - In all fragments, implement `setOnItemClickListener` with the corresponding navigation action.
-   - get the article from ArticleFragmentArgs and pass it to the WebView
+9. Show articles in the WebView:
+    - Add plugin: `id "androidx.navigation.safeargs.kotlin" version "2.5.1"`
+    - Make Article class serializable and add it to the argument of ArticleFragment in the navigation graph.
+    - In all fragments, implement `setOnItemClickListener` with the corresponding navigation action.
+    - get the article from ArticleFragmentArgs and pass it to the WebView
+
+10. Adding and deleting articles in the database:
+    - Implement all the ArticleDao functions to NewsRepository and NewsViewModel.
+    - Call those functions in ArticleFragment and SavedNewsFragment
+    - Implement the swipe to delete functionality by creating an `itemTouchHelperCallback` and attaching it to the `RecyclerView`.
+
+11. Handling pagination:
+    - Update the handle response functions to add new articles to the old articles.
+    - Implement a scrollListener to load a new page when needed in the fragments (always cast to List for DiffUtil)
+    - In SearchNewsFragment, clear LiveData and SearchNewsResponse when EditText changes.

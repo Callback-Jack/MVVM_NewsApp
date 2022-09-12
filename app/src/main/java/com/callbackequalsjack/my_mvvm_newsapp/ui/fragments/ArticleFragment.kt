@@ -9,6 +9,7 @@ import com.callbackequalsjack.my_mvvm_newsapp.databinding.FragmentArticleBinding
 import com.callbackequalsjack.my_mvvm_newsapp.ui.NewsActivity
 import com.callbackequalsjack.my_mvvm_newsapp.ui.NewsViewModel
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 
 class ArticleFragment : Fragment(R.layout.fragment_article) {
 
@@ -21,9 +22,14 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         binding = FragmentArticleBinding.bind(view)
         viewModel = (activity as NewsActivity).viewModel
         val article = args.article
-        binding.webView.apply {
+        if (article.url == null) Snackbar.make(view, "Url is invalid", Snackbar.LENGTH_SHORT).show()
+        else binding.webView.apply {
             webViewClient = WebViewClient()
-            article.url?.let { loadUrl(it) }
+            loadUrl(article.url) }
+
+        binding.fab.setOnClickListener {
+            viewModel.saveArticle(article)
+            Snackbar.make(view, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
         }
     }
 }
