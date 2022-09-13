@@ -1,9 +1,13 @@
 package com.callbackequalsjack.my_mvvm_newsapp.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
+import androidx.core.content.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -46,6 +50,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             )
         }
 
+        binding.etSearch.setOnKeyListener { view, keyCode, _ -> handleKeyEvent(view, keyCode) }
         var job: Job? = null
         binding.etSearch.addTextChangedListener { editable ->
             job?.cancel()
@@ -140,5 +145,14 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 isScrolling = false
             }
         }
+    }
+
+    private fun handleKeyEvent(view: View, keyCode: Int): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            val inputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            return true
+        }
+        return false
     }
 }
