@@ -14,7 +14,7 @@ Swipe left or right to delete the article.
 
 ### How to view the project:
 
-- you can either use my online demo page: <a href="https://android-app-demo-page.netlify.app" target="_blank">https://android-app-demo-page.netlify.app</a>.
+- you can either use my online demo page: https://android-app-demo-page.netlify.app.
   (current account status only allow one user at a time, if the load fails or the queue is full, please just wait a bit and refresh the page)
 - Or download the MVVM_NewsApp.apk file and install on an android device or a simulator.
 - Or clone the project and open it in Android Studio.
@@ -89,3 +89,8 @@ Swipe left or right to delete the article.
    - Get the connectivityManager from the application context, and detect the connectivity base on different versions.
    - Create safe calls for `getbreakingNews()` and `searchNews()`.
    - Add the application parameter to all necessary classes.
+
+13. Handling dependency injection:
+   - Add Kodein dependencies: "org.kodein.di:kodein-di-generic-jvm", "org.kodein.di:kodein-di-framework-android-x".
+   - Instantiate database, repository, factory in NewsApplication.
+   - Replace the instantiation in the activity class with Kodein.

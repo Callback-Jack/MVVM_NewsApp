@@ -10,10 +10,15 @@ import com.callbackequalsjack.my_mvvm_newsapp.R
 import com.callbackequalsjack.my_mvvm_newsapp.databinding.ActivityNewsBinding
 import com.callbackequalsjack.my_mvvm_newsapp.db.ArticleDatabase
 import com.callbackequalsjack.my_mvvm_newsapp.repository.NewsRepository
+import org.kodein.di.android.kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 
-class NewsActivity : AppCompatActivity() {
+class NewsActivity : AppCompatActivity(), KodeinAware {
 
+    override val kodein by kodein()
     private lateinit var binding: ActivityNewsBinding
+    private val factory: NewsViewModelProviderFactory by instance()
     lateinit var viewModel: NewsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,9 +26,9 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val repository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(application, repository)
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
+//        val repository = NewsRepository(ArticleDatabase(this))
+//        val viewModelProviderFactory = NewsViewModelProviderFactory(application, repository)
+        viewModel = ViewModelProvider(this, factory)[NewsViewModel::class.java]
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.newsNavHostFragment) as NavHostFragment
