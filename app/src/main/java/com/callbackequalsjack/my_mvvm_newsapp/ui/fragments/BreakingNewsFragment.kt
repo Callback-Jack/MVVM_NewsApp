@@ -64,6 +64,11 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Loading -> {
                     showProgressBar()
                 }
+                is Resource.Clear -> {
+                    newsAdapter.differ.submitList(listOf())
+                    viewModel.breakingNewsResponse = null
+                    viewModel.breakingNewsPage = 1
+                }
             }
         })
     }
@@ -82,7 +87,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     var isLastPage = false
     var isScrolling = false
 
-    val scrollListener = object : RecyclerView.OnScrollListener() {
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {

@@ -49,7 +49,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         var job: Job? = null
         binding.etSearch.addTextChangedListener { editable ->
             job?.cancel()
-            viewModel.searchNews.postValue(null)
+            viewModel.searchNews.postValue(Resource.Clear())
             job = MainScope().launch {
                 delay(SEARCH_NEWS_TIME_DELAY)
                 editable?.let {
@@ -62,10 +62,6 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
-                null -> {
-                    newsAdapter.differ.submitList(listOf())
-                    viewModel.searchNewsResponse = null
-                }
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
@@ -85,6 +81,11 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 }
                 is Resource.Loading -> {
                     showProgressBar()
+                }
+                is Resource.Clear -> {
+                    newsAdapter.differ.submitList(listOf())
+                    viewModel.searchNewsResponse = null
+                    viewModel.searchNewsPage = 1
                 }
             }
         })

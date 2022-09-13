@@ -1,9 +1,16 @@
 package com.callbackequalsjack.my_mvvm_newsapp.ui
 
 import android.annotation.SuppressLint
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.callbackequalsjack.my_mvvm_newsapp.NewsApplication
 import com.callbackequalsjack.my_mvvm_newsapp.models.Article
 import com.callbackequalsjack.my_mvvm_newsapp.models.NewsResponse
 import com.callbackequalsjack.my_mvvm_newsapp.repository.NewsRepository
@@ -11,10 +18,12 @@ import com.callbackequalsjack.my_mvvm_newsapp.util.Constants.Companion.COUNTRY_C
 import com.callbackequalsjack.my_mvvm_newsapp.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.io.IOException
 
 class NewsViewModel(
+    app: Application,
     private val repository: NewsRepository
-) : ViewModel() {
+) : AndroidViewModel(app) {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
@@ -29,16 +38,11 @@ class NewsViewModel(
     }
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
-        breakingNews.postValue(Resource.Loading())
-        val response = repository.getBreakingNews(countryCode, breakingNewsPage)
-        breakingNews.postValue(handleBreakingNewsResponse(response))
+        safeBreakingNewsCall(countryCode)
     }
 
-    @SuppressLint("NullSafeMutableLiveData")
     fun searchNews(searchQuery: String) = viewModelScope.launch {
-        searchNews.postValue(Resource.Loading())
-        val response = repository.searchNews(searchQuery, searchNewsPage)
-        searchNews.postValue(handleSearchNewsResponse(response))
+        safeSearchNewsCall(searchQuery)
     }
 
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse>{
@@ -83,5 +87,65 @@ class NewsViewModel(
 
     fun deleteArticle(article: Article) = viewModelScope.launch {
         repository.deleteArticle(article)
+    }
+
+    private fun hasInternetConnection(): Boolean {
+        val connectivityManager = getApplication<NewsApplication>().getSystemService(
+            Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+            return when {
+                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) -> return true
+                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) -> return true
+                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) -> return true
+                else -> false
+            }
+        } else {
+            connectivityManager.activeNetworkInfo?.run {
+                when (type) {
+                    ConnectivityManager.TYPE_WIFI -> true
+                    ConnectivityManager.TYPE_MOBILE -> true
+                    ConnectivityManager.TYPE_ETHERNET -> true
+                    else -> false
+                }
+            }
+        }
+        return false
+    }
+
+    private suspend fun safeBreakingNewsCall(countryCode: String) {
+        breakingNews.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response = repository.getBreakingNews(countryCode, breakingNewsPage)
+                breakingNews.postValue(handleBreakingNewsResponse(response))
+            } else {
+                breakingNews.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> breakingNews.postValue(Resource.Error("Network Failure"))
+                else -> breakingNews.postValue(Resource.Error("Conversion Error"))
+            }
+        }
+    }
+
+    private suspend fun safeSearchNewsCall(searchQuery: String) {
+        searchNews.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                searchNews.postValue(Resource.Loading())
+                val response = repository.searchNews(searchQuery, searchNewsPage)
+                searchNews.postValue(handleSearchNewsResponse(response))
+            } else {
+                searchNews.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
+                else -> searchNews.postValue(Resource.Error("Conversion Error"))
+            }
+        }
     }
 }
