@@ -1,7 +1,9 @@
 # MVVM_NewsApp
 
 ### Description:
-***IMPORTANT***: The newsapi.org free plan only allows 100 queries per day, when used up this app will not work.
+***IMPORTANT***: The newsapi.org free plan only allows 100 queries per day, when used up this app will not work. You can add your own `API_KEY` to
+app/src/main/java/com/callbackequalsjack/my_mvvm_newsapp/util/Constants.kt to keep using it.
+
 This app is implemented with MVVM, it uses `Retrofit` to retrieve and search for news at newsapi.org, and stores favorite news in the database using `Room`. The pagination of the `Recycler View` is 5 articles at a time. The navigation between fragments is built with `Navigation Components`, and a slide-in-and-out animation is added. `Kodein` is used for the dependency injection.
 <p align="center"> <img src="/ScreenShots/breakingNews.png" width="200" alt="Breaking News ScreenShot" /> </p>
 Click on an item article to view it.
@@ -75,22 +77,22 @@ Swipe left or right to delete the article.
    - get the article from ArticleFragmentArgs and pass it to the WebView
 
 10. Adding and deleting articles in the database:
-   - Implement all the ArticleDao functions to NewsRepository and NewsViewModel.
-   - Call those functions in ArticleFragment and SavedNewsFragment
-   - Implement the swipe to delete functionality by creating an `itemTouchHelperCallback` and attaching it to the `RecyclerView`.
+    - Implement all the ArticleDao functions to NewsRepository and NewsViewModel.
+    - Call those functions in ArticleFragment and SavedNewsFragment
+    - Implement the swipe to delete functionality by creating an `itemTouchHelperCallback` and attaching it to the `RecyclerView`.
 
 11. Handling pagination:
-   - Update the handle response functions to add new articles to the old articles.
-   - Implement a scrollListener to load a new page when needed in the fragments (always cast to List for DiffUtil)
-   - In SearchNewsFragment, clear LiveData and SearchNewsResponse when EditText changes.
+    - Update the handle response functions to add new articles to the old articles.
+    - Implement a scrollListener to load a new page when needed in the fragments (always cast to List for DiffUtil)
+    - In SearchNewsFragment, clear LiveData and SearchNewsResponse when EditText changes.
 
 12. Handling Internet connection exceptions:
-   - Create NewsApplication class, add it to the manifest, and pass it to AndroidViewModel.
-   - Get the connectivityManager from the application context, and detect the connectivity base on different versions.
-   - Create safe calls for `getbreakingNews()` and `searchNews()`.
-   - Add the application parameter to all necessary classes.
+    - Create NewsApplication class, add it to the manifest, and pass it to AndroidViewModel.
+    - Get the connectivityManager from the application context, and detect the connectivity base on different versions.
+    - Create safe calls for `getbreakingNews()` and `searchNews()`.
+    - Add the application parameter to all necessary classes.
 
 13. Handling dependency injection:
-   - Add Kodein dependencies: "org.kodein.di:kodein-di-generic-jvm", "org.kodein.di:kodein-di-framework-android-x".
-   - Instantiate database, repository, factory in NewsApplication.
-   - Replace the instantiation in the activity class with Kodein.
+    - Add Kodein dependencies: "org.kodein.di:kodein-di-generic-jvm", "org.kodein.di:kodein-di-framework-android-x".
+    - Instantiate database, repository, factory in NewsApplication.
+    - Replace the instantiation in the activity class with Kodein.
