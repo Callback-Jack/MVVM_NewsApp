@@ -1,10 +1,9 @@
 # MVVM_NewsApp
 
 ### Description:
-***IMPORTANT***: The newsapi.org free plan only allows 100 queries per day, when used up this app will not work. You can add your own `API_KEY` to
-app/src/main/java/com/callbackequalsjack/my_mvvm_newsapp/util/Constants.kt to keep using it.
+***IMPORTANT***: The newsapi.org free plan only allows 100 queries per day, when used up this app will not work.
 
-This app is implemented with MVVM, it uses `Retrofit` to retrieve and search for news at newsapi.org, and stores favorite news in the database using `Room`. The pagination of the `Recycler View` is 5 articles at a time. The navigation between fragments is built with `Navigation Components`, and a slide-in-and-out animation is added. `Kodein` is used for the dependency injection.
+This app is implemented with MVVM, it uses `Retrofit` to retrieve and search for news at newsapi.org, and stores favourite news in the database using `Room`. The pagination of the `Recycler View` is 5 articles at a time. The navigation between fragments is built with `Navigation Components`, and a slide-in-and-out animation is added. `Kodein` is used for the dependency injection.
 <p align="center"> <img src="/ScreenShots/breakingNews.png" width="200" alt="Breaking News ScreenShot" /> </p>
 Click on an item article to view it.
 <p align="center"> <img src="/ScreenShots/searchNews.png" width="200" alt="Search News ScreenShot" /> </p>
@@ -17,9 +16,9 @@ Swipe left or right to delete the article.
 ### How to view the project:
 
 - you can either use my online demo page: https://android-app-demo-page.netlify.app.
-  (current account status only allow one user at a time, if the load fails or the queue is full, please just wait a bit and refresh the page)
-- Or download the MVVM_NewsApp.apk file and install on an android device or a simulator.
-- Or clone the project and open it in Android Studio.
+  (current account status only allows one user at a time, if the load fails or the queue is full, please just wait a bit and refresh the page)
+- Or download the MVVM_NewsApp.apk file and install it on an android device or a simulator.
+- Or clone the project and open it in Android Studio. Request an `API_KEY` from newsapi.org, add it to `app/src/main/java/com/callbackequalsjack/my_mvvm_newsapp/util/Constants.kt` to start using it.
 
 ### Step-by-step project building:
 
@@ -28,9 +27,9 @@ Swipe left or right to delete the article.
 
 2. Setup navigation components:
    - Add dependencies for "androidx.navigation:navigation-fragment-ktx", "androidx.navigation:navigation-ui-ktx".
-   - Setup the Host Fragment and all the fragment classes.
+   - Set up the Host Fragment and all the fragment classes.
    - Design the navigation graph actions and add slide-in-and-out animations.
-   - Setup the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`.
+   - Set up the bottom navigation menu and add the navigation controller to the menu in `NewsActivity`.
 
 3. Retrofit setup:
    - Add dependencies for `Retrofit`: "com.squareup.retrofit2:retrofit", "com.squareup.retrofit2:converter-gson".
@@ -41,7 +40,7 @@ Swipe left or right to delete the article.
 
 4. Room setup:
    - Add dependencies for `Room`: "androidx.room:room-runtime", "androidx.room:room-ktx", kapt "androidx.room:room-compiler".
-   - Annotate Article data class, and create ArticleDao interface.
+   - Annotate the Article data class, and create the ArticleDao interface.
    - Create ArticleDatabase class.
    - Create Converters class for the `TypeConverters` for Source data class, and add it to ArticleDatabase.
 
@@ -59,20 +58,20 @@ Swipe left or right to delete the article.
    - Create a wrapper generic Resource class to wrap around the responses.
 
 7. Handling breaking news response:
-   - Add `user-permissions` for the Internet in manifest.
+   - Add `user-permissions` for the Internet in the manifest.
    - Add dependencies for `Coroutines`: "org.jetbrains.kotlinx:kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-android".
    - Create getBreakingNews function in NewsRepository.
    - Create a function to launch `getBreakingNews()`, and a function to handle the response in NewsViewModel.
    - Setup RecyclerView with `breakingNews LiveData` in BreakingNewsFragment.
-   - Handle the different types of `Resource<NewsResponse>` .
+   - Handle the different types of `Resource<NewsResponse>`.
 
 8. Handling search news response:
-   - Setup NewsRepository, NewsViewModel, and SearchNewsFragment, the same way as for the breaking news.
+   - Set up NewsRepository, NewsViewModel, and SearchNewsFragment, the same way as for the breaking news.
    - Implement `addTextChangedListener` for the `EditText` with `Coroutine Job` to search for news with a time delay.
 
 9. Show articles in the WebView:
    - Add plugin: `id "androidx.navigation.safeargs.kotlin" version "2.5.1"`
-   - Make Article class serializable and add it to the argument of ArticleFragment in the navigation graph.
+   - Make the Article class serializable and add it to the argument of ArticleFragment in the navigation graph.
    - In all fragments, implement `setOnItemClickListener` with the corresponding navigation action.
    - get the article from ArticleFragmentArgs and pass it to the WebView
 
@@ -94,5 +93,13 @@ Swipe left or right to delete the article.
 
 13. Handling dependency injection:
     - Add Kodein dependencies: "org.kodein.di:kodein-di-generic-jvm", "org.kodein.di:kodein-di-framework-android-x".
-    - Instantiate database, repository, factory in NewsApplication.
-    - Replace the instantiation in the activity class with Kodein.
+    - Instantiate database, repository, and factory in NewsApplication.
+    - Replace the instantiation in the activity class with `Kodein`.
+
+
+
+
+
+
+
+

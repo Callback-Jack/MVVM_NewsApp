@@ -25,7 +25,7 @@ interface NewsAPI {
     @GET("v2/everything")
     suspend fun searchForNews(
         @Query("q")
-        serachQuery: String,
+        searchQuery: String,
         @Query("page")
         pageNum: Int = 1,
         @Query("pageSize")

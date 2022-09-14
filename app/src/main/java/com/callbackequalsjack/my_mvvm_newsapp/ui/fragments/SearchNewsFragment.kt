@@ -7,10 +7,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
-import androidx.core.content.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,7 +48,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             )
         }
 
-        binding.etSearch.setOnKeyListener { view, keyCode, _ -> handleKeyEvent(view, keyCode) }
+        binding.etSearch.setOnKeyListener { _, keyCode, _ -> handleKeyEvent(view, keyCode) }
         var job: Job? = null
         binding.etSearch.addTextChangedListener { editable ->
             job?.cancel()
@@ -65,7 +63,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             }
         }
 
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.searchNews.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -93,7 +91,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                     viewModel.searchNewsPage = 1
                 }
             }
-        })
+        }
     }
 
     private fun hideProgressBar() {

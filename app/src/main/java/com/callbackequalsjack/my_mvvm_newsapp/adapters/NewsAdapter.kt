@@ -41,11 +41,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             tvTitle.text = article.title
             tvPublishedAt.text = article.publishedAt
             tvDescription.text = article.description
-//            root.setOnClickListener {
-//                onItemClickListener?.let { it(article) }
-//            }
+            root.setOnClickListener {
+                onItemClickListener?.let { it(article) }
+            }
         }
-        holder.binding.root.setOnClickListener { onItemClickListener?.let { it(article) } }
     }
 
     override fun getItemCount(): Int {

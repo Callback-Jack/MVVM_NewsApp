@@ -5,7 +5,7 @@ import com.callbackequalsjack.my_mvvm_newsapp.db.ArticleDatabase
 import com.callbackequalsjack.my_mvvm_newsapp.models.Article
 
 class NewsRepository(
-    val db: ArticleDatabase
+    private val db: ArticleDatabase
 ) {
 
     suspend fun getBreakingNews(countryCode: String, pageNum: Int) =

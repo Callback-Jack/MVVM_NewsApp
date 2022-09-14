@@ -3,13 +3,10 @@ package com.callbackequalsjack.my_mvvm_newsapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.callbackequalsjack.my_mvvm_newsapp.R
 import com.callbackequalsjack.my_mvvm_newsapp.databinding.ActivityNewsBinding
-import com.callbackequalsjack.my_mvvm_newsapp.db.ArticleDatabase
-import com.callbackequalsjack.my_mvvm_newsapp.repository.NewsRepository
 import org.kodein.di.android.kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance

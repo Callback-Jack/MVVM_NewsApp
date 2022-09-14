@@ -3,14 +3,12 @@ package com.callbackequalsjack.my_mvvm_newsapp.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.callbackequalsjack.my_mvvm_newsapp.R
 import com.callbackequalsjack.my_mvvm_newsapp.adapters.NewsAdapter
-import com.callbackequalsjack.my_mvvm_newsapp.databinding.FragmentBreakingNewsBinding
 import com.callbackequalsjack.my_mvvm_newsapp.databinding.FragmentSavedNewsBinding
 import com.callbackequalsjack.my_mvvm_newsapp.ui.NewsActivity
 import com.callbackequalsjack.my_mvvm_newsapp.ui.NewsViewModel
@@ -67,9 +65,9 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             attachToRecyclerView(binding.rvSavedNews)
         }
 
-        viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { articles ->
+        viewModel.getSavedNews().observe(viewLifecycleOwner) { articles ->
             newsAdapter.differ.submitList(articles)
-        })
+        }
 
     }
 
