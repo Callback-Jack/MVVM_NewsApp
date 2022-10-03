@@ -1,14 +1,14 @@
 package com.callbackequalsjack.my_mvvm_newsapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.callbackequalsjack.my_mvvm_newsapp.R
 import com.callbackequalsjack.my_mvvm_newsapp.databinding.ActivityNewsBinding
-import org.kodein.di.android.kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 class NewsActivity : AppCompatActivity(), KodeinAware {
@@ -23,8 +23,6 @@ class NewsActivity : AppCompatActivity(), KodeinAware {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val repository = NewsRepository(ArticleDatabase(this))
-//        val viewModelProviderFactory = NewsViewModelProviderFactory(application, repository)
         viewModel = ViewModelProvider(this, factory)[NewsViewModel::class.java]
 
         val navHostFragment =

@@ -3,7 +3,8 @@ package com.callbackequalsjack.my_mvvm_newsapp.ui
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
+import android.net.ConnectivityManager.*
+import android.net.NetworkCapabilities.*
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -51,8 +52,8 @@ class NewsViewModel(
                     breakingNewsResponse = resultResponse
                 } else {
                     val oldArticles = breakingNewsResponse?.articles
-                    val newArticle = resultResponse.articles
-                    oldArticles?.addAll(newArticle)
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
                 }
                 return Resource.Success(breakingNewsResponse ?: resultResponse)
             }
@@ -94,17 +95,17 @@ class NewsViewModel(
             val activeNetwork = connectivityManager.activeNetwork ?: return false
             val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
             return when {
-                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) -> return true
-                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) -> return true
-                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) -> return true
+                (capabilities.hasTransport(TRANSPORT_WIFI)) -> return true
+                (capabilities.hasTransport(TRANSPORT_CELLULAR)) -> return true
+                (capabilities.hasTransport(TRANSPORT_ETHERNET)) -> return true
                 else -> false
             }
         } else {
             connectivityManager.activeNetworkInfo?.run {
                 when (type) {
-                    ConnectivityManager.TYPE_WIFI -> true
-                    ConnectivityManager.TYPE_MOBILE -> true
-                    ConnectivityManager.TYPE_ETHERNET -> true
+                    TYPE_WIFI -> true
+                    TYPE_MOBILE -> true
+                    TYPE_ETHERNET -> true
                     else -> false
                 }
             }

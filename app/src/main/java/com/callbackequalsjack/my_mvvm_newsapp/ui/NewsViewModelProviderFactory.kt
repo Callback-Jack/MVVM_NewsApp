@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.callbackequalsjack.my_mvvm_newsapp.ui
 
 import android.app.Application
@@ -6,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.callbackequalsjack.my_mvvm_newsapp.repository.NewsRepository
 
 class NewsViewModelProviderFactory(
-    val app: Application,
+    private val app: Application,
     private val newsRepository: NewsRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
